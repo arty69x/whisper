@@ -28,4 +28,10 @@ npx vercel link
 npm run vercel:deploy
 ```
 
+5) Create a Preview deployment for PRs or quick QA:
+
+```
+npm run vercel:preview
+```
+
 Once linked, pushes to the connected branch will trigger deployments automatically.

@@ -88,9 +88,9 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex bg-brand-primary text-white overflow-hidden font-mono text-[10px]">
+      <div className="min-h-screen flex flex-col lg:flex-row bg-brand-primary text-white overflow-hidden font-mono text-[10px]">
         {/* CENTERED SCANNING HUB */}
-        <div className="flex-1 relative bg-[#020202] flex items-center justify-center p-20 overflow-hidden">
+        <div className="flex-1 relative bg-[#020202] flex items-center justify-center p-6 sm:p-10 lg:p-20 overflow-hidden">
           {/* BACKGROUND GRID */}
           <div className="absolute inset-0 opacity-10 pointer-events-none">
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-size-[40px_40px]"></div>
@@ -168,7 +168,7 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
               ACTIVE_SYNC
             </span>
           </div>
-          <div className="flex-1 p-8 overflow-hidden font-mono text-[9px] leading-relaxed">
+          <div className="flex-1 p-6 sm:p-8 overflow-hidden font-mono text-[9px] leading-relaxed">
             <pre className="text-emerald-500/70 whitespace-pre-wrap">
               {currentJson || "// Handshaking..."}
             </pre>
@@ -181,7 +181,7 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
   return (
     <div className="min-h-screen bg-[#fafbfc] animate-fadeIn flex flex-col">
       {/* DEPLOYMENT HEADER */}
-      <nav className="h-16 border-b border-gray-100 bg-white/80 backdrop-blur-md flex items-center justify-between px-8 sticky top-0 z-50">
+      <nav className="border-b border-gray-100 bg-white/80 backdrop-blur-md flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-4 sm:px-8 py-3 sm:py-0 sticky top-0 z-50">
         <div className="flex items-center gap-4">
           <div className="px-3 py-1 rounded-full bg-brand-primary text-white text-[9px] font-black uppercase tracking-widest">
             Live_Preview
@@ -190,7 +190,7 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
             BUILD::{params.id.slice(0, 8)}
           </span>
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-3">
           <Link
             href={`/?id=${params.id}`}
             className="px-4 py-1.5 rounded-full border border-gray-200 text-[10px] font-black uppercase tracking-widest hover:bg-gray-50 transition-all"
@@ -238,7 +238,7 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
             </div>
           </div>
 
-          <div className="glass-panel p-6 rounded-2xl border border-gray-100 space-y-4">
+          <div className="glass-panel p-4 sm:p-6 rounded-2xl border border-gray-100 space-y-4">
             <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
               Synthesis_Log
             </h4>
