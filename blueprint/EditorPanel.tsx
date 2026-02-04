@@ -20,6 +20,7 @@ export default function EditorPanel({
   onSave,
   currentId,
 }: EditorPanelProps) {
+  const [isAssistantOpen, setIsAssistantOpen] = useState(false);
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [instruction, setInstruction] = useState("");
   const [ghostHint, setGhostHint] = useState("");
@@ -122,17 +123,10 @@ export default function EditorPanel({
   };
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen lg:h-screen bg-brand-primary text-white overflow-hidden font-sans selection:bg-brand-secondary/30">
-      <input
-        type="file"
-        id={visionInputId}
-        className="hidden"
-        accept="image/*"
-        onChange={handleVisionChange}
-      />
+    <div className="flex flex-col md:flex-row min-h-screen md:h-screen bg-brand-primary text-white overflow-y-auto md:overflow-hidden font-sans selection:bg-brand-secondary/30">
       {/* LEFT: HIERARCHY */}
-      <div className="w-full lg:w-[320px] lg:min-w-[320px] bg-mesh border-b lg:border-b-0 lg:border-r border-white/5 flex flex-col relative z-20 shadow-2xl">
-        <div className="p-6 sm:p-10 border-b border-white/5">
+      <div className="w-full md:w-[320px] md:min-w-[320px] bg-mesh border-b md:border-b-0 md:border-r border-white/5 flex flex-col relative z-20 shadow-2xl">
+        <div className="p-10 border-b border-white/5">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-2 h-2 rounded-full bg-brand-secondary shadow-[0_0_10px_#00E0FF]"></div>
             <h2 className="font-black text-[11px] tracking-[0.3em] uppercase text-gray-500">
@@ -189,10 +183,10 @@ export default function EditorPanel({
       </div>
 
       {/* CENTER: PREVIEW */}
-      <div className="flex-1 p-4 sm:p-6 lg:p-10 bg-brand-muted relative overflow-hidden flex flex-col">
+      <div className="flex-1 p-6 sm:p-10 bg-brand-muted relative overflow-hidden flex flex-col">
         {/* TOP TOOLBAR */}
-        <div className="mb-6 sm:mb-10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 bg-black/20 backdrop-blur-md rounded-2xl p-4 border border-white/5">
-          <div className="flex flex-wrap gap-2 sm:gap-4">
+        <div className="mb-6 sm:mb-10 flex flex-wrap gap-4 justify-between items-center bg-black/20 backdrop-blur-md rounded-2xl p-4 border border-white/5">
+          <div className="flex gap-4">
             {["Desktop", "Tablet", "Mobile"].map((device) => (
               <button
                 key={device}
@@ -206,6 +200,13 @@ export default function EditorPanel({
             <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary"></span>
             LIVE_SYNC_ACTIVE
           </div>
+          <button
+            type="button"
+            onClick={() => setIsAssistantOpen((prev) => !prev)}
+            className="md:hidden text-[9px] font-black uppercase tracking-widest px-4 py-2 rounded-lg border border-white/10 text-gray-300 hover:text-white hover:border-white/20 transition-all"
+          >
+            {isAssistantOpen ? "Hide_Assistant" : "Show_Assistant"}
+          </button>
         </div>
 
         <div className="flex-1 rounded-premium-xl bg-white shadow-2xl p-1 relative overflow-hidden group">
@@ -217,10 +218,12 @@ export default function EditorPanel({
       </div>
 
       {/* RIGHT: SMART ASSISTANT */}
-      <div className="w-full lg:w-[420px] xl:w-[480px] bg-mesh border-t lg:border-t-0 lg:border-l border-white/5 flex flex-col z-20">
+      <div
+        className={`w-full lg:w-[480px] bg-mesh border-t md:border-t-0 md:border-l border-white/5 flex flex-col z-20 ${isAssistantOpen ? "flex" : "hidden"} md:flex`}
+      >
         {selectedNode ? (
           <div className="flex-1 flex flex-col">
-            <div className="p-6 sm:p-10 border-b border-white/5 bg-white/5 backdrop-blur-md flex flex-col sm:flex-row sm:justify-between sm:items-start gap-6">
+            <div className="p-6 sm:p-10 border-b border-white/5 bg-white/5 backdrop-blur-md flex flex-wrap justify-between items-start gap-4">
               <div>
                 <h2 className="font-black text-[11px] tracking-[0.3em] uppercase text-brand-secondary mb-2">
                   Layer_Attributes
@@ -234,6 +237,13 @@ export default function EditorPanel({
                   </span>
                 </div>
               </div>
+              <button
+                type="button"
+                onClick={() => setIsAssistantOpen(false)}
+                className="md:hidden px-3 py-1 rounded-md border border-white/10 text-[9px] font-black uppercase tracking-widest text-gray-400 hover:text-white hover:border-white/20 transition-all"
+              >
+                Close
+              </button>
               {/* Historical Recall */}
               {typeof window !== "undefined" &&
                 localStorage.getItem("vision_src_latest") && (
